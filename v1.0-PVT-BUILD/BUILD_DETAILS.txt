@@ -1,0 +1,381 @@
+Firmware build completed at Sun Jun 18 14:33:58 2017
+
+
+============================================================
+Repository:  arduino-boards
+Repo URL:    git://github.com/keyboardio/Arduino-Boards
+Description: v1.01
+
+Repository:  atmega-firmware
+Repo URL:    git://github.com/keyboardio/Model01-Firmware
+Description: v1.0
+
+Repository:  attiny-bootloader
+Repo URL:    git://github.com/keyboardio/attiny_i2c_bootloader
+Description: v1.0
+
+Repository:  attiny-firmware
+Repo URL:    git://github.com/keyboardio/avr_keyscanner
+Description: v1.0-dirty
+
+============================================================
+Build tool invocation:
+./build-all
+
+
+============================================================
+Build Log:
+# avr-gcc -v
+STDERR:
+Using built-in specs.
+Reading specs from /Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin/../lib/gcc/avr/4.9.2/device-specs/specs-avr2
+COLLECT_GCC=/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin/avr-gcc
+COLLECT_LTO_WRAPPER=/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin/../libexec/gcc/avr/4.9.2/lto-wrapper
+Target: avr
+Configured with: ../gcc/configure --enable-fixed-point --enable-languages=c,c++ --prefix=/Users/jenkins/jenkins/workspace/avr-gcc/label/mac-mini/objdir --enable-long-long --disable-nls --disable-checking --disable-libssp --disable-libada --disable-shared --enable-lto --with-avrlibc=yes --with-dwarf2 --disable-doc --target=avr
+Thread model: single
+gcc version 4.9.2 (GCC) 
+
+# cd output
+# rm latest
+# cd /Users/jesse/git/model01-factory-programming/firmware-builder/
+# cd repos/attiny_firmware
+# git fetch --all
+Fetching origin
+
+# git checkout v1.0
+M	etc/bootloader.hex
+
+STDERR:
+HEAD is now at cd27a49... build the attiny flasher as part of our standard build process
+
+# git submodule update --init --recursive
+# git clean -xdf
+# git describe --abbrev=6 --dirty --always
+v1.0-dirty
+
+# cd /Users/jesse/git/model01-factory-programming/firmware-builder/
+# cd repos/Model01-Firmware
+# git fetch --all
+Fetching origin
+
+# git checkout v1.0
+STDERR:
+HEAD is now at be5c949... Move the version key to "any" on the numlock layer
+
+# git submodule update --init --recursive
+# git clean -xdf
+Removing output/
+
+# git describe --abbrev=6 --dirty --always
+v1.0
+
+# cd /Users/jesse/git/model01-factory-programming/firmware-builder/
+# cd repos/attiny_bootloader
+# git fetch --all
+Fetching origin
+
+# git checkout v1.0
+STDERR:
+HEAD is now at 5b14e6e... make astyle
+
+# git submodule update --init --recursive
+# git clean -xdf
+# git describe --abbrev=6 --dirty --always
+v1.0
+
+# cd /Users/jesse/git/model01-factory-programming/firmware-builder/
+# cd repos/arduino_boards
+# git fetch --all
+Fetching origin
+
+# git checkout v1.01
+M	bootloaders/caterina
+
+STDERR:
+Previous HEAD position was 7a6bccf... Blindly pull all plugins up to current
+HEAD is now at 98c9316... Blindly pull all plugins up to current
+
+# git submodule update --init --recursive
+Submodule path 'bootloaders/caterina': checked out '470122734f01e3827cf22937965dcc3e872d7eea'
+
+# git clean -xdf
+# git describe --abbrev=6 --dirty --always
+v1.01
+
+# cd /Users/jesse/git/model01-factory-programming/firmware-builder/repos/attiny_bootloader/TWI_Slave
+# make all
+avr-gcc -Wall -Wextra -Werror -pedantic -Os -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000  -Wl,--section-start=.text=0x1C00 -c twi_slave.c -o twi_slave.o
+avr-gcc -Wall -Wextra -Werror -pedantic -Os -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000  -Wl,--section-start=.text=0x1C00 -o twi_slave.elf twi_slave.o
+rm -f twi_slave.hex
+avr-objcopy -j .text -j .data -O ihex twi_slave.elf twi_slave.hex
+avr-size --format=avr --mcu=attiny88 twi_slave.elf
+AVR Memory Usage
+----------------
+Device: attiny88
+
+Program:    1022 bytes (12.5% Full)
+(.text + .data + .bootloader)
+
+Data:         67 bytes (13.1% Full)
+(.data + .bss + .noinit)
+
+
+# write bootloader jump vector to beginning
+sed -i'' -e '$ d' twi_slave.hex # two dollar signs because Make otherwise interprets them
+# write a new vector table to jump to the bootloader
+# rjmp to 0x1C00, etc.
+echo ':02000000FFCD32' >> twi_slave.hex
+echo ':02000200FFCD30' >> twi_slave.hex
+echo ':02000400FFCD2E' >> twi_slave.hex
+echo ':02000600FFCD2C' >> twi_slave.hex
+echo ':02000800FFCD2A' >> twi_slave.hex
+echo ':02000A00FFCD28' >> twi_slave.hex
+echo ':02000C00FFCD26' >> twi_slave.hex
+echo ':02000E00FFCD24' >> twi_slave.hex
+echo ':02001000FFCD22' >> twi_slave.hex
+echo ':02001200FFCD20' >> twi_slave.hex
+echo ':02001400FFCD1E' >> twi_slave.hex
+echo ':02001600FFCD1C' >> twi_slave.hex
+echo ':02001800FFCD1A' >> twi_slave.hex
+echo ':02001A00FFCD18' >> twi_slave.hex
+echo ':02001C00FFCD16' >> twi_slave.hex
+echo ':02001E00FFCD14' >> twi_slave.hex
+echo ':02002000FFCD12' >> twi_slave.hex
+echo ':02002200FFCD10' >> twi_slave.hex
+echo ':02002400FFCD0E' >> twi_slave.hex
+echo ':02002600FFCD0C' >> twi_slave.hex
+echo ':02002800FFCD0A' >> twi_slave.hex
+echo ':00000001FF' >> twi_slave.hex
+
+# cp twi_slave.hex /Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/attiny88_bootloader.hex
+# cd /Users/jesse/git/model01-factory-programming/firmware-builder/repos/attiny_firmware
+# cp /Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/attiny88_bootloader.hex etc/bootloader.hex
+# make all
+make -C firmware
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c main.c -o main.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c twi-slave.c -o twi-slave.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c ringbuf.c -o ringbuf.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c wire-protocol.c -o wire-protocol.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c keyscanner.c -o keyscanner.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c led-spiout.c -o led-spiout.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -o main.elf main.o twi-slave.o ringbuf.o wire-protocol.o keyscanner.o led-spiout.o
+rm -f main.hex
+avr-objcopy -j .text -j .data -O ihex main.elf main.hex
+avr-size --format=avr --mcu=attiny88 main.elf
+AVR Memory Usage
+----------------
+Device: attiny88
+
+Program:    1746 bytes (21.3% Full)
+(.text + .data + .bootloader)
+
+Data:        221 bytes (43.2% Full)
+(.data + .bss + .noinit)
+
+
+mkdir -p out
+cp firmware/main.hex out/attiny88_keyscanner.hex
+./tools/make_factory_firmware.py
+mkdir -p out/attiny_flasher
+cp etc/flasher_Makefile out/attiny_flasher/Makefile
+python2.7 ./tools/hex_to_atmega.py out/attiny88_keyscanner.hex > out/attiny_flasher/attiny_flasher.ino
+
+# make flashing-tool
+make -C firmware
+make[1]: Nothing to be done for `all'.
+mkdir -p out
+cp firmware/main.hex out/attiny88_keyscanner.hex
+./tools/make_factory_firmware.py
+mkdir -p out/attiny_flasher
+cp etc/flasher_Makefile out/attiny_flasher/Makefile
+python2.7 ./tools/hex_to_atmega.py out/attiny88_keyscanner.hex > out/attiny_flasher/attiny_flasher.ino
+
+# cp out/attiny_flasher/Makefile /Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/attiny_flasher/Makefile
+# cp out/attiny_flasher/attiny_flasher.ino /Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/attiny_flasher/attiny_flasher.ino
+# cp out/attiny88_factory.hex /Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/attiny88_firmware_with_bootloader.hex
+# cp out/attiny88_keyscanner.hex /Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/attiny88_firmware.hex
+# cd /Users/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/bootloaders/caterina
+# make all
+
+-------- begin --------
+avr-gcc (GCC) 4.9.2
+Copyright (C) 2014 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+Compiling C: Caterina.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./Caterina.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Caterina.o.d Caterina.c -o Caterina.o
+
+Compiling C: i2c.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./i2c.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/i2c.o.d i2c.c -o i2c.o
+
+Compiling C: Descriptors.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./Descriptors.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Descriptors.o.d Descriptors.c -o Descriptors.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Device_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Endpoint_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Host_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Pipe_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/USBController_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/USBInterrupt_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/EndpointStream_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/PipeStream_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/ConfigDescriptor.o.d lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.c -o lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/DeviceStandardReq.o.d lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.c -o lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/Events.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/Events.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Events.o.d lufa/LUFA/Drivers/USB/Core/Events.c -o lufa/LUFA/Drivers/USB/Core/Events.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/HostStandardReq.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/HostStandardReq.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/HostStandardReq.o.d lufa/LUFA/Drivers/USB/Core/HostStandardReq.c -o lufa/LUFA/Drivers/USB/Core/HostStandardReq.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/USBTask.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/USBTask.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/USBTask.o.d lufa/LUFA/Drivers/USB/Core/USBTask.c -o lufa/LUFA/Drivers/USB/Core/USBTask.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Class/Common/HIDParser.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Class/Common/HIDParser.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/HIDParser.o.d lufa/LUFA/Drivers/USB/Class/Common/HIDParser.c -o lufa/LUFA/Drivers/USB/Class/Common/HIDParser.o
+
+Linking: Caterina.elf
+avr-gcc -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=Caterina.o -Ilufa/ -std=c99 -MMD -MP -MF .dep/Caterina.elf.d Caterina.o i2c.o Descriptors.o lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.o lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.o lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o lufa/LUFA/Drivers/USB/Core/Events.o lufa/LUFA/Drivers/USB/Core/HostStandardReq.o lufa/LUFA/Drivers/USB/Core/USBTask.o lufa/LUFA/Drivers/USB/Class/Common/HIDParser.o --output Caterina.elf -Wl,-Map=Caterina.map,--cref -Wl,--section-start=.text=0x7000 -Wl,--relax -Wl,--gc-sections     -lm
+
+Creating load file for Flash: Caterina.hex
+avr-objcopy -O ihex -R .eeprom -R .fuse -R .lock Caterina.elf Caterina.hex
+
+Creating load file for EEPROM: Caterina.eep
+avr-objcopy -j .eeprom --set-section-flags=.eeprom="alloc,load" \
+	--change-section-lma .eeprom=0 --no-change-warnings -O ihex Caterina.elf Caterina.eep || exit 0
+
+Creating Extended Listing: Caterina.lss
+avr-objdump -h -S -z Caterina.elf > Caterina.lss
+
+Creating Symbol Table: Caterina.sym
+avr-nm -n Caterina.elf > Caterina.sym
+
+Size after:
+AVR Memory Usage
+----------------
+Device: atmega32u4
+
+Program:    4090 bytes (12.5% Full)
+(.text + .data + .bootloader)
+
+Data:        188 bytes (7.3% Full)
+(.data + .bss + .noinit)
+
+
+
+-------- end --------
+
+
+# cp Caterina.hex /Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/atmega32u4_bootloader.hex
+# make clean
+
+-------- begin --------
+
+Cleaning project:
+rm -f Caterina.hex
+rm -f Caterina.eep
+rm -f Caterina.cof
+rm -f Caterina.elf
+rm -f Caterina.map
+rm -f Caterina.sym
+rm -f Caterina.lss
+rm -f ./Caterina.o ./i2c.o ./Descriptors.o ./lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.o ./lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.o ./lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o ./lufa/LUFA/Drivers/USB/Core/Events.o ./lufa/LUFA/Drivers/USB/Core/HostStandardReq.o ./lufa/LUFA/Drivers/USB/Core/USBTask.o ./lufa/LUFA/Drivers/USB/Class/Common/HIDParser.o  
+rm -f ./Caterina.lst ./i2c.lst ./Descriptors.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.lst ./lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.lst ./lufa/LUFA/Drivers/USB/Core/Events.lst ./lufa/LUFA/Drivers/USB/Core/HostStandardReq.lst ./lufa/LUFA/Drivers/USB/Core/USBTask.lst ./lufa/LUFA/Drivers/USB/Class/Common/HIDParser.lst  
+rm -f Caterina.s i2c.s Descriptors.s lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.s lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.s lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.s lufa/LUFA/Drivers/USB/Core/Events.s lufa/LUFA/Drivers/USB/Core/HostStandardReq.s lufa/LUFA/Drivers/USB/Core/USBTask.s lufa/LUFA/Drivers/USB/Class/Common/HIDParser.s
+rm -f Caterina.d i2c.d Descriptors.d lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.d lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.d lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.d lufa/LUFA/Drivers/USB/Core/Events.d lufa/LUFA/Drivers/USB/Core/HostStandardReq.d lufa/LUFA/Drivers/USB/Core/USBTask.d lufa/LUFA/Drivers/USB/Class/Common/HIDParser.d
+rm -f Caterina.i i2c.i Descriptors.i lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.i lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.i lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.i lufa/LUFA/Drivers/USB/Core/Events.i lufa/LUFA/Drivers/USB/Core/HostStandardReq.i lufa/LUFA/Drivers/USB/Core/USBTask.i lufa/LUFA/Drivers/USB/Class/Common/HIDParser.i
+rm -rf .dep
+-------- end --------
+
+
+# cd /Users/jesse/git/model01-factory-programming/firmware-builder/repos/Model01-Firmware
+# make build LOCAL_CFLAGS='-DBUILD_INFORMATION="sketch:v1.0;lib:v1.01"'
+/Users/jesse/Arduino/hardware/keyboardio/avr/libraries/Kaleidoscope-Plugin/tools//kaleidoscope-builder build
+Building output/Model01-Firmware/Model01-Firmware (0.0.0-gv1.0) ...
+- Size: firmware/Model01-Firmware/Model01-Firmware-0.0.0-gv1.0.elf
+  - Program:   17606 bytes (61.4% Full)
+  - Data:       1510 bytes (59.0% Full)
+
+
+# make hex-with-bootloader BOOTLOADER_PATH=/Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/atmega32u4_bootloader.hex LOCAL_CFLAGS='-DBUILD_INFORMATION="sketch:v1.0;lib:v1.01"'
+/Users/jesse/Arduino/hardware/keyboardio/avr/libraries/Kaleidoscope-Plugin/tools//kaleidoscope-builder hex-with-bootloader
+Building output/Model01-Firmware/Model01-Firmware (0.0.0-gv1.0) ...
+Using /Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/atmega32u4_bootloader.hex
+MD5 (/Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/atmega32u4_bootloader.hex) = be76ca466ce15695a5c50335b2e909ac
+
+Combined firmware and bootloader are now at /Users/jesse/git/model01-factory-programming/firmware-builder/repos/Model01-Firmware/output/Model01-Firmware/Model01-Firmware-0.0.0-gv1.0-with-bootloader.hex
+Make sure you have the bootloader version you expect.
+
+And TEST THIS ON REAL HARDWARE BEFORE YOU GIVE IT TO ANYONE
+
+
+# cp output/Model01-Firmware/Model01-Firmware-latest.hex /Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/atmega32u4_firmware.hex
+# cp output/Model01-Firmware/Model01-Firmware-latest-with-bootloader.hex /Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/atmega32u4_firmware_with_bootloader.hex
+# cd /Users/jesse/git/model01-factory-programming/firmware-builder/output/2017-06-18T14:33:31/
+
+
+
+============================================================
+
+
+'arduino-builder -version':
+Arduino Builder 1.3.25
+Copyright (C) 2015 Arduino LLC and contributors
+See https://www.arduino.cc/ and https://github.com/arduino/arduino-builder/graphs/contributors
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+'avr-gcc -v':
+Using built-in specs.
+Reading specs from /Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin/../lib/gcc/avr/4.9.2/device-specs/specs-avr2
+COLLECT_GCC=/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin/avr-gcc
+COLLECT_LTO_WRAPPER=/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin/../libexec/gcc/avr/4.9.2/lto-wrapper
+Target: avr
+Configured with: ../gcc/configure --enable-fixed-point --enable-languages=c,c++ --prefix=/Users/jenkins/jenkins/workspace/avr-gcc/label/mac-mini/objdir --enable-long-long --disable-nls --disable-checking --disable-libssp --disable-libada --disable-shared --enable-lto --with-avrlibc=yes --with-dwarf2 --disable-doc --target=avr
+Thread model: single
+gcc version 4.9.2 (GCC) 
+
+
+'git --version':
+git version 2.10.1 (Apple Git-78)
+
+
+'make -v':
+GNU Make 3.81
+Copyright (C) 2006  Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+
+This program built for i386-apple-darwin11.3.0
+
+
+'uname -a':
+Darwin jesses-MacBook-Air.local 16.6.0 Darwin Kernel Version 16.6.0: Fri Apr 14 16:21:16 PDT 2017; root:xnu-3789.60.24~6/RELEASE_X86_64 x86_64
+
+
+'hostname':
+jesses-MacBook-Air.local
