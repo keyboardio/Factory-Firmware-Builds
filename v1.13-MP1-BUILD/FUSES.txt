@@ -1,0 +1,3 @@
+ATTiny88:   Fuses (E:FE, H:DD, L:EE)
+ATMega32u4: Fuses (E:CB, H:D8, L:FF)
+
