@@ -1,0 +1,571 @@
+Firmware build completed at Tue Nov 14 06:00:49 2017
+
+
+============================================================
+Repository:  attiny-bootloader
+Repo URL:    git://github.com/keyboardio/attiny_i2c_bootloader
+Description: v1.13
+
+Repository:  atmega-firmware
+Repo URL:    
+Description: v1.22
+
+Repository:  arduino-boards
+Repo URL:    git://github.com/keyboardio/Arduino-Boards
+Description: v1.22
+
+Repository:  attiny-firmware
+Repo URL:    git://github.com/keyboardio/avr_keyscanner
+Description: v1.13
+
+============================================================
+Build tool invocation:
+./build-all
+
+
+============================================================
+Build Log:
+# avr-gcc -v
+STDERR:
+Using built-in specs.
+Reading specs from /usr/local/arduino/hardware/tools/avr/bin/../lib/gcc/avr/4.9.2/device-specs/specs-avr2
+COLLECT_GCC=/usr/local/arduino/hardware/tools/avr/bin/avr-gcc
+COLLECT_LTO_WRAPPER=/usr/local/arduino/hardware/tools/avr/bin/../libexec/gcc/avr/4.9.2/lto-wrapper
+Target: avr
+Configured with: ../gcc/configure --enable-fixed-point --enable-languages=c,c++ --prefix=/home/jenkins/workspace/avr-gcc/label/debian7-x86_64/objdir --enable-long-long --disable-nls --disable-checking --disable-libssp --disable-libada --disable-shared --enable-lto --with-avrlibc=yes --with-dwarf2 --disable-doc --target=avr
+Thread model: single
+gcc version 4.9.2 (GCC) 
+
+# cd output
+# rm latest
+# cd /home/jesse/git/model01-factory-programming/firmware-builder/
+# git clone git://github.com/keyboardio/Arduino-Boards repos/arduino_boards
+STDERR:
+Cloning into 'repos/arduino_boards'...
+
+# cd repos/arduino_boards
+# git checkout v1.22
+STDERR:
+Note: checking out 'v1.22'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at ed7cd53... update kaleidoscope version
+
+# git submodule update --init --recursive
+Submodule path 'bootloaders/caterina': checked out '836ebe3c46b22957b94fecb83739ea422e52dc08'
+Submodule path 'bootloaders/caterina/lufa': checked out 'beb069b9b845da02de07e4e3e0149e84004d2445'
+Submodule path 'libraries/AtmegaScanner': checked out 'bbce7d40afa1c25eafafa6e2ca0109c300893a69'
+Submodule path 'libraries/FingerprintUSBHost': checked out '5ba25f43007ff103f790291a8262fb114ae633a1'
+Submodule path 'libraries/HID': checked out 'c5b309cb600dcc195d936f263bd2187aa224b2df'
+Submodule path 'libraries/Kaleidoscope': checked out 'd05c3cacf809d97a9d9c4cbdd6acbaa5c27981fe'
+Submodule path 'libraries/Kaleidoscope-Colormap': checked out 'fb524cc0ddf4a5754ce7f48aaf654d4abfdb98b7'
+Submodule path 'libraries/Kaleidoscope-Cycle': checked out '8431bed1ed6110e6b664a28a638b4595a1750ea9'
+Submodule path 'libraries/Kaleidoscope-CycleTimeReport': checked out '475fc4c2ae21d9223513d4741b7a599666fc9dc8'
+Submodule path 'libraries/Kaleidoscope-DualUse': checked out 'de5c880cd1f7cf89be8630700ffd3317ae585fc8'
+Submodule path 'libraries/Kaleidoscope-EEPROM-Keymap': checked out '604e64fb912b3724719d2fc7d58c6427890539e7'
+Submodule path 'libraries/Kaleidoscope-EEPROM-Keymap-Programmer': checked out '500ffc25fc173c874d87cf9c797c135cb268e313'
+Submodule path 'libraries/Kaleidoscope-EEPROM-Settings': checked out '50c92bddf7a751604063fe55b0d6a6e57c7f7dde'
+Submodule path 'libraries/Kaleidoscope-Escape-OneShot': checked out 'a4d6a814f2c3689f93839a2466790431c4f72d4b'
+Submodule path 'libraries/Kaleidoscope-FingerPainter': checked out '186a5c01822ccd4f4ff70b372e05aaa6398349a5'
+Submodule path 'libraries/Kaleidoscope-Focus': checked out '53f81b5825ede4e45de872772b84f9af01e49f49'
+Submodule path 'libraries/Kaleidoscope-GhostInTheFirmware': checked out '75663c4896ddb62d274afdace614527d6ed707a3'
+Submodule path 'libraries/Kaleidoscope-Hardware': checked out 'e90c84b301f54b41cbac11ec49cff2b790cbe419'
+Submodule path 'libraries/Kaleidoscope-Hardware-Model01': checked out 'c126e1b27b58c007b9acf1d262154ddd0fc05b58'
+Submodule path 'libraries/Kaleidoscope-Hardware-Shortcut': checked out '15cfd545b18d370d39aee723035df1af32abf078'
+Submodule path 'libraries/Kaleidoscope-Heatmap': checked out 'b1fc8d7cb139b402015f1c6c5bff1cb43ad698ef'
+Submodule path 'libraries/Kaleidoscope-HostOS': checked out '052cef848895edb41e9341250476426392d0d11a'
+Submodule path 'libraries/Kaleidoscope-IgnoranceIsBliss': checked out '63fe00027969b46b90cc8c647177333a452d37ba'
+Submodule path 'libraries/Kaleidoscope-LED-ActiveModColor': checked out 'c8b954c6ec4b41e1a2eef0c841e12000a8d442b6'
+Submodule path 'libraries/Kaleidoscope-LED-AlphaSquare': checked out '50073dc27bfe4a8f67e1423151913e825436d93d'
+Submodule path 'libraries/Kaleidoscope-LED-Palette-Theme': checked out '42e60891d46b4c1a33a40863ac4a1b2e814e909e'
+Submodule path 'libraries/Kaleidoscope-LED-Stalker': checked out 'e2e9ea063b15166e3723acd00cb35c94a709a9ca'
+Submodule path 'libraries/Kaleidoscope-LEDControl': checked out '45a11578557316ced22af537be0dc304706001f8'
+Submodule path 'libraries/Kaleidoscope-LEDEffect-BootGreeting': checked out '89dea00e10d64c1c923a3cd97c7e04cf65009fc6'
+Submodule path 'libraries/Kaleidoscope-LEDEffect-Breathe': checked out '8c9acb2be5acc10fc45dc99bb74e6e6c5e80f5f3'
+Submodule path 'libraries/Kaleidoscope-LEDEffect-Chase': checked out 'c761bf70a98cbaa31bf7442e5719a8e4294ccbf4'
+Submodule path 'libraries/Kaleidoscope-LEDEffect-Rainbow': checked out '77a3f9a6116b642635a2219855312a00362b6028'
+Submodule path 'libraries/Kaleidoscope-LEDEffect-SolidColor': checked out 'eb4bd2ad767a28556da3a79f632403ea8d1e4513'
+Submodule path 'libraries/Kaleidoscope-LEDEffects': checked out '387cc95109250337afcc7f7ec4dab2821b4eaa73'
+Submodule path 'libraries/Kaleidoscope-Leader': checked out '329c1336385ad4b0f6289b9b56a558d695d9e7e0'
+Submodule path 'libraries/Kaleidoscope-Macros': checked out '916b02fc56d194a7f96d0a91ce74246e036c72ec'
+Submodule path 'libraries/Kaleidoscope-MagicCombo': checked out '3693c564b32ea14df128e2662bd9aaa76e896838'
+Submodule path 'libraries/Kaleidoscope-Model01-TestMode': checked out '043ba2072b43cf8e82c366392fa4dfb9fa206c7e'
+Submodule path 'libraries/Kaleidoscope-MouseKeys': checked out 'e3aa727825ddd62e0897345520a44402817c2675'
+Submodule path 'libraries/Kaleidoscope-NumPad': checked out '952198a98af9a19174d9ba1ea73d8515a0f28ebb'
+Submodule path 'libraries/Kaleidoscope-Numlock': checked out '45a71751e856dfca68e04fbb3e87b4b98b363e50'
+Submodule path 'libraries/Kaleidoscope-OneShot': checked out '5a8cae7c216901e45658d7c40b285da52c2c1323'
+Submodule path 'libraries/Kaleidoscope-Ranges': checked out '04d32479e118bb8314a8e69e54a41303bac1bb3f'
+Submodule path 'libraries/Kaleidoscope-ShapeShifter': checked out 'a6ffae6a3cab46d9b406ce5b59e3e213e757b0d2'
+Submodule path 'libraries/Kaleidoscope-SpaceCadet': checked out '2fee591e0c1a2be2f80f475e6e6e5942310568dd'
+Submodule path 'libraries/Kaleidoscope-Steno': checked out '1e95cf1429035ba01f4fad49e0bf9b600e1b4a68'
+Submodule path 'libraries/Kaleidoscope-Syster': checked out '9694ce9221b4d741ae45a72f383be996af64c858'
+Submodule path 'libraries/Kaleidoscope-TapDance': checked out '2bf181b0f58989f0851551e06a0eb7a8708505cb'
+Submodule path 'libraries/Kaleidoscope-TopsyTurvy': checked out '649289319a03cf43b153536688f89374fd17d141'
+Submodule path 'libraries/Kaleidoscope-TypingBreaks': checked out '51b28577db1b7a9fc9b9ced91ac95c9d6ac8a6b6'
+Submodule path 'libraries/Kaleidoscope-Unicode': checked out '7e261efb8ec045031ce804b5c4353749c526a37f'
+Submodule path 'libraries/KeyboardioHID': checked out 'fa09374e412f09b7177f3f6e20312be47cdcc961'
+Submodule path 'libraries/KeyboardioScanner': checked out 'dce4784cdcb317ca26581e54861be8d5b79bf94f'
+Submodule path 'libraries/Model01-Firmware': checked out 'cd2f939adc5ec69c6fd5af5b44859df3395a2d08'
+
+STDERR:
+Submodule 'bootloaders/caterina' (https://github.com/keyboardio/Model01-Bootloader) registered for path 'bootloaders/caterina'
+Submodule 'libraries/AtmegaScanner' (https://github.com/keyboardio/AtmegaScanner) registered for path 'libraries/AtmegaScanner'
+Submodule 'libraries/FingerprintUSBHost' (https://github.com/keyboardio/FingerprintUSBHost) registered for path 'libraries/FingerprintUSBHost'
+Submodule 'libraries/Arduino-HID' (https://github.com/keyboardio/Arduino-HID) registered for path 'libraries/HID'
+Submodule 'libraries/Kaleidoscope' (https://github.com/keyboardio/Kaleidoscope) registered for path 'libraries/Kaleidoscope'
+Submodule 'libraries/Kaleidoscope-Colormap' (https://github.com/keyboardio/Kaleidoscope-Colormap.git) registered for path 'libraries/Kaleidoscope-Colormap'
+Submodule 'libraries/Kaleidoscope-Cycle' (https://github.com/keyboardio/Kaleidoscope-Cycle) registered for path 'libraries/Kaleidoscope-Cycle'
+Submodule 'libraries/Kaleidoscope-CycleTimeReport' (https://github.com/keyboardio/Kaleidoscope-CycleTimeReport) registered for path 'libraries/Kaleidoscope-CycleTimeReport'
+Submodule 'libraries/Kaleidoscope-DualUse' (https://github.com/keyboardio/Kaleidoscope-DualUse) registered for path 'libraries/Kaleidoscope-DualUse'
+Submodule 'libraries/Kaleidoscope-EEPROM-Keymap' (https://github.com/keyboardio/Kaleidoscope-EEPROM-Keymap) registered for path 'libraries/Kaleidoscope-EEPROM-Keymap'
+Submodule 'libraries/Kaleidoscope-EEPROM-Keymap-Programmer' (https://github.com/keyboardio/Kaleidoscope-EEPROM-Keymap-Programmer) registered for path 'libraries/Kaleidoscope-EEPROM-Keymap-Programmer'
+Submodule 'libraries/Kaleidoscope-EEPROM-Settings' (https://github.com/keyboardio/Kaleidoscope-EEPROM-Settings) registered for path 'libraries/Kaleidoscope-EEPROM-Settings'
+Submodule 'libraries/Kaleidoscope-Escape-OneShot' (https://github.com/keyboardio/Kaleidoscope-Escape-OneShot) registered for path 'libraries/Kaleidoscope-Escape-OneShot'
+Submodule 'libraries/Kaleidoscope-FingerPainter' (https://github.com/keyboardio/Kaleidoscope-FingerPainter) registered for path 'libraries/Kaleidoscope-FingerPainter'
+Submodule 'libraries/Kaleidoscope-Focus' (https://github.com/keyboardio/Kaleidoscope-Focus) registered for path 'libraries/Kaleidoscope-Focus'
+Submodule 'libraries/Kaleidoscope-GhostInTheFirmware' (https://github.com/keyboardio/Kaleidoscope-GhostInTheFirmware) registered for path 'libraries/Kaleidoscope-GhostInTheFirmware'
+Submodule 'libraries/Kaleidoscope-Hardware' (https://github.com/Keyboardio/Kaleidoscope-Hardware/) registered for path 'libraries/Kaleidoscope-Hardware'
+Submodule 'libraries/Kaleidoscope-Hardware-Model01' (https://github.com/keyboardio/Kaleidoscope-Hardware-Model01) registered for path 'libraries/Kaleidoscope-Hardware-Model01'
+Submodule 'libraries/Kaleidoscope-Hardware-Shortcut' (https://github.com/shortcutgg/Kaleidoscope-Hardware-Shortcut) registered for path 'libraries/Kaleidoscope-Hardware-Shortcut'
+Submodule 'libraries/Kaleidoscope-Heatmap' (https://github.com/keyboardio/Kaleidoscope-Heatmap) registered for path 'libraries/Kaleidoscope-Heatmap'
+Submodule 'libraries/Kaleidoscope-HostOS' (https://github.com/keyboardio/Kaleidoscope-HostOS) registered for path 'libraries/Kaleidoscope-HostOS'
+Submodule 'libraries/Kaleidoscope-IgnoranceIsBliss' (https://github.com/keyboardio/Kaleidoscope-IgnoranceIsBliss) registered for path 'libraries/Kaleidoscope-IgnoranceIsBliss'
+Submodule 'libraries/Kaleidoscope-LED-ActiveModColor' (https://github.com/keyboardio/Kaleidoscope-LED-ActiveModColor) registered for path 'libraries/Kaleidoscope-LED-ActiveModColor'
+Submodule 'libraries/Kaleidoscope-LED-AlphaSquare' (https://github.com/keyboardio/Kaleidoscope-LED-AlphaSquare) registered for path 'libraries/Kaleidoscope-LED-AlphaSquare'
+Submodule 'libraries/Kaleidoscope-LED-Palette-Theme' (https://github.com/keyboardio/Kaleidoscope-LED-Palette-Theme.git) registered for path 'libraries/Kaleidoscope-LED-Palette-Theme'
+Submodule 'libraries/Kaleidoscope-LED-Stalker' (https://github.com/keyboardio/Kaleidoscope-LED-Stalker) registered for path 'libraries/Kaleidoscope-LED-Stalker'
+Submodule 'libraries/Kaleidoscope-LEDControl' (https://github.com/keyboardio/Kaleidoscope-LEDControl) registered for path 'libraries/Kaleidoscope-LEDControl'
+Submodule 'libraries/Kaleidoscope-LEDEffect-BootGreeting' (https://github.com/keyboardio/Kaleidoscope-LEDEffect-BootGreeting) registered for path 'libraries/Kaleidoscope-LEDEffect-BootGreeting'
+Submodule 'libraries/Kaleidoscope-LEDEffect-Breathe' (https://github.com/keyboardio/Kaleidoscope-LEDEffect-Breathe) registered for path 'libraries/Kaleidoscope-LEDEffect-Breathe'
+Submodule 'libraries/Kaleidoscope-LEDEffect-Chase' (https://github.com/keyboardio/Kaleidoscope-LEDEffect-Chase) registered for path 'libraries/Kaleidoscope-LEDEffect-Chase'
+Submodule 'libraries/Kaleidoscope-LEDEffect-Rainbow' (https://github.com/keyboardio/Kaleidoscope-LEDEffect-Rainbow) registered for path 'libraries/Kaleidoscope-LEDEffect-Rainbow'
+Submodule 'libraries/Kaleidoscope-LEDEffect-SolidColor' (https://github.com/keyboardio/Kaleidoscope-LEDEffect-SolidColor) registered for path 'libraries/Kaleidoscope-LEDEffect-SolidColor'
+Submodule 'libraries/Kaleidoscope-LEDEffects' (https://github.com/keyboardio/Kaleidoscope-LEDEffects) registered for path 'libraries/Kaleidoscope-LEDEffects'
+Submodule 'libraries/Kaleidoscope-Leader' (https://github.com/keyboardio/Kaleidoscope-Leader) registered for path 'libraries/Kaleidoscope-Leader'
+Submodule 'libraries/Kaleidoscope-Macros' (https://github.com/keyboardio/Kaleidoscope-Macros) registered for path 'libraries/Kaleidoscope-Macros'
+Submodule 'libraries/Kaleidoscope-MagicCombo' (https://github.com/keyboardio/Kaleidoscope-MagicCombo) registered for path 'libraries/Kaleidoscope-MagicCombo'
+Submodule 'libraries/Kaleidoscope-Model01-TestMode' (https://github.com/keyboardio/Kaleidoscope-Model01-TestMode) registered for path 'libraries/Kaleidoscope-Model01-TestMode'
+Submodule 'libraries/Kaleidoscope-MouseKeys' (https://github.com/keyboardio/Kaleidoscope-MouseKeys) registered for path 'libraries/Kaleidoscope-MouseKeys'
+Submodule 'libraries/Kaleidoscope-NumPad' (https://github.com/Keyboardio/Kaleidoscope-NumPad) registered for path 'libraries/Kaleidoscope-NumPad'
+Submodule 'libraries/Kaleidoscope-Numlock' (https://github.com/keyboardio/Kaleidoscope-Numlock) registered for path 'libraries/Kaleidoscope-Numlock'
+Submodule 'libraries/Kaleidoscope-OneShot' (https://github.com/keyboardio/Kaleidoscope-OneShot) registered for path 'libraries/Kaleidoscope-OneShot'
+Submodule 'libraries/Kaleidoscope-Ranges' (https://github.com/keyboardio/Kaleidoscope-Ranges) registered for path 'libraries/Kaleidoscope-Ranges'
+Submodule 'libraries/Kaleidoscope-ShapeShifter' (https://github.com/keyboardio/Kaleidoscope-ShapeShifter) registered for path 'libraries/Kaleidoscope-ShapeShifter'
+Submodule 'libraries/Kaleidoscope-SpaceCadet' (https://github.com/keyboardio/Kaleidoscope-SpaceCadet) registered for path 'libraries/Kaleidoscope-SpaceCadet'
+Submodule 'libraries/Kaleidoscope-Steno' (https://github.com/keyboardio/Kaleidoscope-Steno.git) registered for path 'libraries/Kaleidoscope-Steno'
+Submodule 'libraries/Kaleidoscope-Syster' (https://github.com/keyboardio/Kaleidoscope-Syster) registered for path 'libraries/Kaleidoscope-Syster'
+Submodule 'libraries/Kaleidoscope-TapDance' (https://github.com/keyboardio/Kaleidoscope-TapDance) registered for path 'libraries/Kaleidoscope-TapDance'
+Submodule 'libraries/Kaleidoscope-TopsyTurvy' (https://github.com/keyboardio/Kaleidoscope-TopsyTurvy) registered for path 'libraries/Kaleidoscope-TopsyTurvy'
+Submodule 'libraries/Kaleidoscope-TypingBreaks' (https://github.com/keyboardio/Kaleidoscope-TypingBreaks) registered for path 'libraries/Kaleidoscope-TypingBreaks'
+Submodule 'libraries/Kaleidoscope-Unicode' (https://github.com/keyboardio/Kaleidoscope-Unicode) registered for path 'libraries/Kaleidoscope-Unicode'
+Submodule 'libraries/KeyboardioHID' (https://github.com/keyboardio/KeyboardioHID) registered for path 'libraries/KeyboardioHID'
+Submodule 'libraries/KeyboardioScanner' (https://github.com/keyboardio/KeyboardioScanner) registered for path 'libraries/KeyboardioScanner'
+Submodule 'libraries/Model01-Firmware' (https://github.com/Keyboardio/Model01-Firmware) registered for path 'libraries/Model01-Firmware'
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/bootloaders/caterina'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/AtmegaScanner'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/FingerprintUSBHost'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/HID'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Colormap'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Cycle'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-CycleTimeReport'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-DualUse'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-EEPROM-Keymap'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-EEPROM-Keymap-Programmer'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-EEPROM-Settings'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Escape-OneShot'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-FingerPainter'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Focus'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-GhostInTheFirmware'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Hardware'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Hardware-Model01'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Hardware-Shortcut'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Heatmap'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-HostOS'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-IgnoranceIsBliss'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-LED-ActiveModColor'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-LED-AlphaSquare'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-LED-Palette-Theme'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-LED-Stalker'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-LEDControl'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-LEDEffect-BootGreeting'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-LEDEffect-Breathe'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-LEDEffect-Chase'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-LEDEffect-Rainbow'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-LEDEffect-SolidColor'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-LEDEffects'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Leader'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Macros'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-MagicCombo'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Model01-TestMode'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-MouseKeys'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-NumPad'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Numlock'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-OneShot'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Ranges'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-ShapeShifter'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-SpaceCadet'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Steno'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Syster'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-TapDance'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-TopsyTurvy'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-TypingBreaks'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Kaleidoscope-Unicode'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/KeyboardioHID'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/KeyboardioScanner'...
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Model01-Firmware'...
+Submodule 'lufa' (https://github.com/keyboardio/lufa) registered for path 'bootloaders/caterina/lufa'
+Cloning into '/home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/bootloaders/caterina/lufa'...
+
+# git clean -xdf
+# git describe --abbrev=6 --dirty --always
+v1.22
+
+# cd /home/jesse/git/model01-factory-programming/firmware-builder/
+# git clone git://github.com/keyboardio/avr_keyscanner repos/attiny_firmware
+STDERR:
+Cloning into 'repos/attiny_firmware'...
+
+# cd repos/attiny_firmware
+# git checkout v1.13
+STDERR:
+Note: checking out 'v1.13'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at cd27a49... build the attiny flasher as part of our standard build process
+
+# git submodule update --init --recursive
+# git clean -xdf
+# git describe --abbrev=6 --dirty --always
+v1.13
+
+# cd /home/jesse/git/model01-factory-programming/firmware-builder/
+# git clone git://github.com/keyboardio/attiny_i2c_bootloader repos/attiny_bootloader
+STDERR:
+Cloning into 'repos/attiny_bootloader'...
+
+# cd repos/attiny_bootloader
+# git checkout v1.13
+STDERR:
+Note: checking out 'v1.13'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 5b14e6e... make astyle
+
+# git submodule update --init --recursive
+# git clean -xdf
+# git describe --abbrev=6 --dirty --always
+v1.13
+
+# cd /home/jesse/git/model01-factory-programming/firmware-builder/repos/attiny_bootloader/TWI_Slave
+# make all
+avr-gcc -Wall -Wextra -Werror -pedantic -Os -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000  -Wl,--section-start=.text=0x1C00 -c twi_slave.c -o twi_slave.o
+avr-gcc -Wall -Wextra -Werror -pedantic -Os -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000  -Wl,--section-start=.text=0x1C00 -o twi_slave.elf twi_slave.o
+rm -f twi_slave.hex
+avr-objcopy -j .text -j .data -O ihex twi_slave.elf twi_slave.hex
+avr-size --format=avr --mcu=attiny88 twi_slave.elf
+AVR Memory Usage
+----------------
+Device: attiny88
+
+Program:    1022 bytes (12.5% Full)
+(.text + .data + .bootloader)
+
+Data:         67 bytes (13.1% Full)
+(.data + .bss + .noinit)
+
+
+# write bootloader jump vector to beginning
+sed -i'' -e '$ d' twi_slave.hex # two dollar signs because Make otherwise interprets them
+# write a new vector table to jump to the bootloader
+# rjmp to 0x1C00, etc.
+echo ':02000000FFCD32' >> twi_slave.hex
+echo ':02000200FFCD30' >> twi_slave.hex
+echo ':02000400FFCD2E' >> twi_slave.hex
+echo ':02000600FFCD2C' >> twi_slave.hex
+echo ':02000800FFCD2A' >> twi_slave.hex
+echo ':02000A00FFCD28' >> twi_slave.hex
+echo ':02000C00FFCD26' >> twi_slave.hex
+echo ':02000E00FFCD24' >> twi_slave.hex
+echo ':02001000FFCD22' >> twi_slave.hex
+echo ':02001200FFCD20' >> twi_slave.hex
+echo ':02001400FFCD1E' >> twi_slave.hex
+echo ':02001600FFCD1C' >> twi_slave.hex
+echo ':02001800FFCD1A' >> twi_slave.hex
+echo ':02001A00FFCD18' >> twi_slave.hex
+echo ':02001C00FFCD16' >> twi_slave.hex
+echo ':02001E00FFCD14' >> twi_slave.hex
+echo ':02002000FFCD12' >> twi_slave.hex
+echo ':02002200FFCD10' >> twi_slave.hex
+echo ':02002400FFCD0E' >> twi_slave.hex
+echo ':02002600FFCD0C' >> twi_slave.hex
+echo ':02002800FFCD0A' >> twi_slave.hex
+echo ':00000001FF' >> twi_slave.hex
+
+# cp twi_slave.hex /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/attiny88_bootloader.hex
+# cd /home/jesse/git/model01-factory-programming/firmware-builder/repos/attiny_firmware
+# cp /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/attiny88_bootloader.hex etc/bootloader.hex
+# make all
+make -C firmware
+make[1]: Entering directory '/home/jesse/git/model01-factory-programming/firmware-builder/repos/attiny_firmware/firmware'
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c main.c -o main.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c twi-slave.c -o twi-slave.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c ringbuf.c -o ringbuf.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c wire-protocol.c -o wire-protocol.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c keyscanner.c -o keyscanner.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -c led-spiout.c -o led-spiout.o
+avr-gcc -Wall -Wextra -O2 -std=gnu11 -flto -mmcu=attiny88 -DF_CPU=8000000 -o main.elf main.o twi-slave.o ringbuf.o wire-protocol.o keyscanner.o led-spiout.o
+rm -f main.hex
+avr-objcopy -j .text -j .data -O ihex main.elf main.hex
+avr-size --format=avr --mcu=attiny88 main.elf
+AVR Memory Usage
+----------------
+Device: attiny88
+
+Program:    1746 bytes (21.3% Full)
+(.text + .data + .bootloader)
+
+Data:        221 bytes (43.2% Full)
+(.data + .bss + .noinit)
+
+
+make[1]: Leaving directory '/home/jesse/git/model01-factory-programming/firmware-builder/repos/attiny_firmware/firmware'
+mkdir -p out
+cp firmware/main.hex out/attiny88_keyscanner.hex
+./tools/make_factory_firmware.py
+mkdir -p out/attiny_flasher
+cp etc/flasher_Makefile out/attiny_flasher/Makefile
+python2.7 ./tools/hex_to_atmega.py out/attiny88_keyscanner.hex > out/attiny_flasher/attiny_flasher.ino
+
+# make flashing-tool
+make -C firmware
+make[1]: Entering directory '/home/jesse/git/model01-factory-programming/firmware-builder/repos/attiny_firmware/firmware'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/home/jesse/git/model01-factory-programming/firmware-builder/repos/attiny_firmware/firmware'
+mkdir -p out
+cp firmware/main.hex out/attiny88_keyscanner.hex
+./tools/make_factory_firmware.py
+mkdir -p out/attiny_flasher
+cp etc/flasher_Makefile out/attiny_flasher/Makefile
+python2.7 ./tools/hex_to_atmega.py out/attiny88_keyscanner.hex > out/attiny_flasher/attiny_flasher.ino
+
+# cp out/attiny_flasher/Makefile /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/attiny_flasher/Makefile
+# cp out/attiny_flasher/attiny_flasher.ino /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/attiny_flasher/attiny_flasher.ino
+# cp out/attiny88_factory.hex /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/attiny88_firmware_with_bootloader.hex
+# cp out/attiny88_keyscanner.hex /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/attiny88_firmware.hex
+# cd /home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/bootloaders/caterina
+# make all
+
+-------- begin --------
+avr-gcc (GCC) 4.9.2
+Copyright (C) 2014 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+Compiling C: Caterina.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./Caterina.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Caterina.o.d Caterina.c -o Caterina.o
+
+Compiling C: i2c.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./i2c.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/i2c.o.d i2c.c -o i2c.o
+
+Compiling C: Descriptors.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./Descriptors.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Descriptors.o.d Descriptors.c -o Descriptors.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Device_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Endpoint_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Host_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Pipe_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/USBController_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/USBInterrupt_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/EndpointStream_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/PipeStream_AVR8.o.d lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.c -o lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/ConfigDescriptor.o.d lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.c -o lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/DeviceStandardReq.o.d lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.c -o lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/Events.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/Events.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/Events.o.d lufa/LUFA/Drivers/USB/Core/Events.c -o lufa/LUFA/Drivers/USB/Core/Events.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/HostStandardReq.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/HostStandardReq.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/HostStandardReq.o.d lufa/LUFA/Drivers/USB/Core/HostStandardReq.c -o lufa/LUFA/Drivers/USB/Core/HostStandardReq.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Core/USBTask.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Core/USBTask.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/USBTask.o.d lufa/LUFA/Drivers/USB/Core/USBTask.c -o lufa/LUFA/Drivers/USB/Core/USBTask.o
+
+Compiling C: lufa/LUFA/Drivers/USB/Class/Common/HIDParser.c
+avr-gcc -c -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=./lufa/LUFA/Drivers/USB/Class/Common/HIDParser.lst -Ilufa/ -std=c99 -MMD -MP -MF .dep/HIDParser.o.d lufa/LUFA/Drivers/USB/Class/Common/HIDParser.c -o lufa/LUFA/Drivers/USB/Class/Common/HIDParser.o
+
+Linking: Caterina.elf
+avr-gcc -mmcu=atmega32u4 -I. -gdwarf-2 -DF_CPU=16000000UL -DF_USB=16000000UL -DBOARD=BOARD_USER -DARCH=ARCH_AVR8 -DBOOT_START_ADDR=0x7000UL -DDEVICE_VID=0x1209UL -DDEVICE_PID=0x2300UL -D USB_DEVICE_ONLY -D DEVICE_STATE_AS_GPIOR=0 -D ORDERED_EP_CONFIG -D FIXED_CONTROL_ENDPOINT_SIZE=8 -D FIXED_NUM_CONFIGURATIONS=1 -D USE_RAM_DESCRIPTORS -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)" -D NO_INTERNAL_SERIAL -D NO_DEVICE_SELF_POWER -D NO_DEVICE_REMOTE_WAKEUP -D NO_SOF_EVENTS -D NO_LOCK_BYTE_WRITE_SUPPORT -Os -funsigned-char -funsigned-bitfields -ffunction-sections -fno-inline-small-functions -fpack-struct -fshort-enums -fno-strict-aliasing -Wall -Wstrict-prototypes -Wa,-adhlns=Caterina.o -Ilufa/ -std=c99 -MMD -MP -MF .dep/Caterina.elf.d Caterina.o i2c.o Descriptors.o lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.o lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.o lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o lufa/LUFA/Drivers/USB/Core/Events.o lufa/LUFA/Drivers/USB/Core/HostStandardReq.o lufa/LUFA/Drivers/USB/Core/USBTask.o lufa/LUFA/Drivers/USB/Class/Common/HIDParser.o --output Caterina.elf -Wl,-Map=Caterina.map,--cref -Wl,--section-start=.text=0x7000 -Wl,--relax -Wl,--gc-sections     -lm
+
+Creating load file for Flash: Caterina.hex
+avr-objcopy -O ihex -R .eeprom -R .fuse -R .lock Caterina.elf Caterina.hex
+
+Creating load file for EEPROM: Caterina.eep
+avr-objcopy -j .eeprom --set-section-flags=.eeprom="alloc,load" \
+--change-section-lma .eeprom=0 --no-change-warnings -O ihex Caterina.elf Caterina.eep || exit 0
+
+Creating Extended Listing: Caterina.lss
+avr-objdump -h -S -z Caterina.elf > Caterina.lss
+
+Creating Symbol Table: Caterina.sym
+avr-nm -n Caterina.elf > Caterina.sym
+
+Size after:
+AVR Memory Usage
+----------------
+Device: atmega32u4
+
+Program:    4044 bytes (12.3% Full)
+(.text + .data + .bootloader)
+
+Data:        188 bytes (7.3% Full)
+(.data + .bss + .noinit)
+
+
+
+-------- end --------
+
+
+STDERR:
+Caterina.c: In function 'main':
+Caterina.c:160:14: warning: unused variable 'bootKeyPtrVal' [-Wunused-variable]
+     uint16_t bootKeyPtrVal = *bootKeyPtr;
+              ^
+
+# cp Caterina.hex /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/atmega32u4_bootloader.hex
+# make clean
+
+-------- begin --------
+
+Cleaning project:
+rm -f Caterina.hex
+rm -f Caterina.eep
+rm -f Caterina.cof
+rm -f Caterina.elf
+rm -f Caterina.map
+rm -f Caterina.sym
+rm -f Caterina.lss
+rm -f ./Caterina.o ./i2c.o ./Descriptors.o ./lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.o ./lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.o ./lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.o ./lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.o ./lufa/LUFA/Drivers/USB/Core/Events.o ./lufa/LUFA/Drivers/USB/Core/HostStandardReq.o ./lufa/LUFA/Drivers/USB/Core/USBTask.o ./lufa/LUFA/Drivers/USB/Class/Common/HIDParser.o  
+rm -f ./Caterina.lst ./i2c.lst ./Descriptors.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.lst ./lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.lst ./lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.lst ./lufa/LUFA/Drivers/USB/Core/Events.lst ./lufa/LUFA/Drivers/USB/Core/HostStandardReq.lst ./lufa/LUFA/Drivers/USB/Core/USBTask.lst ./lufa/LUFA/Drivers/USB/Class/Common/HIDParser.lst  
+rm -f Caterina.s i2c.s Descriptors.s lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.s lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.s lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.s lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.s lufa/LUFA/Drivers/USB/Core/Events.s lufa/LUFA/Drivers/USB/Core/HostStandardReq.s lufa/LUFA/Drivers/USB/Core/USBTask.s lufa/LUFA/Drivers/USB/Class/Common/HIDParser.s
+rm -f Caterina.d i2c.d Descriptors.d lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.d lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.d lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.d lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.d lufa/LUFA/Drivers/USB/Core/Events.d lufa/LUFA/Drivers/USB/Core/HostStandardReq.d lufa/LUFA/Drivers/USB/Core/USBTask.d lufa/LUFA/Drivers/USB/Class/Common/HIDParser.d
+rm -f Caterina.i i2c.i Descriptors.i lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.i lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.i lufa/LUFA/Drivers/USB/Core/ConfigDescriptor.i lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.i lufa/LUFA/Drivers/USB/Core/Events.i lufa/LUFA/Drivers/USB/Core/HostStandardReq.i lufa/LUFA/Drivers/USB/Core/USBTask.i lufa/LUFA/Drivers/USB/Class/Common/HIDParser.i
+rm -rf .dep
+-------- end --------
+
+
+# cd /home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Model01-Firmware
+# git describe --abbrev=6 --dirty --always
+v1.22
+
+# make build LOCAL_CFLAGS='-DBUILD_INFORMATION="sketch:v1.22;lib:v1.22"'
+BOARD_HARDWARE_PATH="/home/jesse/Arduino/hardware" /home/jesse/Arduino/hardware/keyboardio/avr/libraries/Kaleidoscope/bin//kaleidoscope-builder build
+Building output/Model01-Firmware/Model01-Firmware (0.0.0-gv1.22) ...
+- Size: firmware/Model01-Firmware/Model01-Firmware-0.0.0-gv1.22.elf
+  - Program:   18908 bytes (65.9% Full)
+  - Data:       1939 bytes (75.7% Full)
+
+
+# make hex-with-bootloader BOOTLOADER_PATH=/home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/atmega32u4_bootloader.hex LOCAL_CFLAGS='-DBUILD_INFORMATION="sketch:v1.22;lib:v1.22"'
+BOARD_HARDWARE_PATH="/home/jesse/Arduino/hardware" /home/jesse/Arduino/hardware/keyboardio/avr/libraries/Kaleidoscope/bin//kaleidoscope-builder hex-with-bootloader
+Building output/Model01-Firmware/Model01-Firmware (0.0.0-gv1.22) ...
+Using /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/atmega32u4_bootloader.hex
+cc3187f677c0faae80f2aa2c6ca6aa89  /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/atmega32u4_bootloader.hex
+
+Combined firmware and bootloader are now at /home/jesse/git/model01-factory-programming/firmware-builder/repos/arduino_boards/libraries/Model01-Firmware/output/Model01-Firmware/Model01-Firmware-0.0.0-gv1.22-with-bootloader.hex
+Make sure you have the bootloader version you expect.
+
+And TEST THIS ON REAL HARDWARE BEFORE YOU GIVE IT TO ANYONE
+
+
+# cp output/Model01-Firmware/Model01-Firmware-latest.hex /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/atmega32u4_firmware.hex
+# cp output/Model01-Firmware/Model01-Firmware-latest-with-bootloader.hex /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/atmega32u4_firmware_with_bootloader.hex
+# cd /home/jesse/git/model01-factory-programming/firmware-builder/output/2017-11-14T06:00:01/
+
+
+
+============================================================
+
+
+'arduino-builder -version':
+Arduino Builder 1.3.23
+Copyright (C) 2015 Arduino LLC and contributors
+See https://www.arduino.cc/ and https://github.com/arduino/arduino-builder/graphs/contributors
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+'avr-gcc -v':
+Using built-in specs.
+Reading specs from /usr/local/arduino/hardware/tools/avr/bin/../lib/gcc/avr/4.9.2/device-specs/specs-avr2
+COLLECT_GCC=/usr/local/arduino/hardware/tools/avr/bin/avr-gcc
+COLLECT_LTO_WRAPPER=/usr/local/arduino/hardware/tools/avr/bin/../libexec/gcc/avr/4.9.2/lto-wrapper
+Target: avr
+Configured with: ../gcc/configure --enable-fixed-point --enable-languages=c,c++ --prefix=/home/jenkins/workspace/avr-gcc/label/debian7-x86_64/objdir --enable-long-long --disable-nls --disable-checking --disable-libssp --disable-libada --disable-shared --enable-lto --with-avrlibc=yes --with-dwarf2 --disable-doc --target=avr
+Thread model: single
+gcc version 4.9.2 (GCC) 
+
+
+'git --version':
+git version 2.14.1
+
+
+'make -v':
+GNU Make 4.1
+Built for x86_64-pc-linux-gnu
+Copyright (C) 1988-2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+
+'uname -a':
+Linux szx 4.13.0-16-generic #19-Ubuntu SMP Wed Oct 11 18:35:14 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+
+
+'hostname':
+szx
