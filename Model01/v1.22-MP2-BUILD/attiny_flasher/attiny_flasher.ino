@@ -1,3 +1,4 @@
+// v 1.22
 #include <util/crc16.h>
 #include "Arduino.h"
 #include "Wire.h"
